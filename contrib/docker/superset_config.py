@@ -56,3 +56,9 @@ class CeleryConfig(object):
 
 
 CELERY_CONFIG = CeleryConfig
+
+BABEL_DEFAULT_LOCALE = "zh"
+
+# Set this API key to enable Mapbox visualizations
+MAPBOX_API_KEY = "pk.eyJ1IjoieGluZ2NhbiIsImEiOiJjazA0bTF0eWEyMGh6M25wZGNtdmJxZXpzIn0.4MOlFD_220-v9nyvkVfqYg"
+AUTH_USER_REGISTRATION_ROLE = 'Alpha'
