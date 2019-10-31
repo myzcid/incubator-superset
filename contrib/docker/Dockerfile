@@ -14,13 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-FROM python:3.6-jessie
+FROM python:3.6-stretch
 
 RUN useradd --user-group --create-home --no-log-init --shell /bin/bash superset
 
 # Configure environment
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8
+
+
+WORKDIR /home/superset
+
+COPY contrib/docker/source.list /etc/apt/sources.list
 
 RUN apt-get update -y
 
@@ -41,14 +46,13 @@ RUN apt-get install -y vim less postgresql-client redis-tools
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
     && apt-get install -y nodejs
 
-WORKDIR /home/superset
 
 COPY requirements.txt .
 COPY requirements-dev.txt .
 COPY contrib/docker/requirements-extra.txt .
 
 RUN pip install --upgrade setuptools pip \
-    && pip install -r requirements.txt -r requirements-dev.txt -r requirements-extra.txt \
+    && pip install -r requirements.txt -r requirements-dev.txt -r requirements-extra.txt -i https://pypi.tuna.tsinghua.edu.cn/simple \
     && rm -rf /root/.cache/pip
 
 RUN pip install gevent
