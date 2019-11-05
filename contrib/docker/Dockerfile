@@ -51,7 +51,7 @@ COPY requirements.txt .
 COPY requirements-dev.txt .
 COPY contrib/docker/requirements-extra.txt .
 
-RUN pip install --upgrade setuptools pip \
+RUN pip install --upgrade setuptools pip -i https://pypi.tuna.tsinghua.edu.cn/simple \
     && pip install -r requirements.txt -r requirements-dev.txt -r requirements-extra.txt -i https://pypi.tuna.tsinghua.edu.cn/simple \
     && rm -rf /root/.cache/pip
 

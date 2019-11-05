@@ -17,6 +17,28 @@
 #
 set -ex
 
+ pip install mysqlclient
+
+export FLASK_APP=superset:app
+flask fab create-admin \
+  --username mark \
+  --firstname mark \
+  --lastname mark \
+  --email mark@linktime.cloud \
+  --password 123456
+# Initialize the database
+superset db upgrade
+echo superset db upgrade
+
+if [ "$SUPERSET_LOAD_EXAMPLES" = "yes" ]; then
+    # Load some data to play with
+    superset load_examples
+fi
+
+# Create default roles and permissions
+superset init
+
+
 if [ "$#" -ne 0 ]; then
     exec "$@"
 elif [ "$SUPERSET_ENV" = "development" ]; then

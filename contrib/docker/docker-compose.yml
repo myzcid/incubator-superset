@@ -24,17 +24,27 @@ services:
     volumes:
       - redis:/data
 
-  postgres:
-    image: postgres:10
+  # postgres:
+  #   image: postgres:10
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: superset
+  #     POSTGRES_PASSWORD: superset
+  #     POSTGRES_USER: superset
+  #   ports:
+  #     - "127.0.0.1:5432:5432"
+  #   volumes:
+  #     - ./data/postgres:/var/lib/postgresql/data
+
+  mysql:
+    image: mysql 8
     restart: unless-stopped
-    environment:
-      POSTGRES_DB: superset
-      POSTGRES_PASSWORD: superset
-      POSTGRES_USER: superset
-    ports:
-      - "127.0.0.1:5432:5432"
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+    environment: 
+      MYSQL_DATABASE: superset
+      MYSQL_USER: superset
+      MYSQL_PASSWORD: superset
+    ports: 
+        - "127.0.0.1:3306:3306"
 
   superset:
     build:
@@ -42,11 +52,10 @@ services:
       dockerfile: contrib/docker/Dockerfile
     restart: unless-stopped
     environment:
-      POSTGRES_DB: superset
-      POSTGRES_USER: superset
-      POSTGRES_PASSWORD: superset
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
+      MYSQL_DATABASE: superset
+      MYSQL_USER: superset
+      MYSQL_PASSWORD: superset
+      MYSQL_URI: 
       REDIS_HOST: redis
       REDIS_PORT: 6379
       # If using production, comment development volume below
@@ -56,7 +65,7 @@ services:
     ports:
       - 8088:8088
     depends_on:
-      - postgres
+      - mysql
       - redis
     volumes:
       # this is needed to communicate with the postgres and redis services
@@ -65,7 +74,7 @@ services:
       # - ../../superset:/home/superset/superset
 
 volumes:
-  postgres:
+  mysql:
     external: false
   redis:
     external: false

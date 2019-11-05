@@ -29,19 +29,13 @@ def get_env_variable(var_name, default=None):
                         .format(var_name)
             raise EnvironmentError(error_msg)
 
+MYSQL_USER = get_env_variable('MYSQL_USER')
+MYSQL_PASSWORD = get_env_variable('MYSQL_PASSWORD')
+MYSQL_DATABASE = get_env_variable('MYSQL_DATABASE')
 
-POSTGRES_USER = get_env_variable('POSTGRES_USER')
-POSTGRES_PASSWORD = get_env_variable('POSTGRES_PASSWORD')
-POSTGRES_HOST = get_env_variable('POSTGRES_HOST')
-POSTGRES_PORT = get_env_variable('POSTGRES_PORT')
-POSTGRES_DB = get_env_variable('POSTGRES_DB')
+SQLALCHEMY_DATABASE_URI = 'mysql://%s:%s@127.0.0.1:3306/%s' % (MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE)
 
-# The SQLAlchemy connection string.
-SQLALCHEMY_DATABASE_URI = 'postgresql://%s:%s@%s:%s/%s' % (POSTGRES_USER,
-                                                           POSTGRES_PASSWORD,
-                                                           POSTGRES_HOST,
-                                                           POSTGRES_PORT,
-                                                           POSTGRES_DB)
+# SQLALCHEMY_DATABASE_URI = "mysql://root:123456@192.168.100.26:3306/superset"
 
 REDIS_HOST = get_env_variable('REDIS_HOST')
 REDIS_PORT = get_env_variable('REDIS_PORT')
