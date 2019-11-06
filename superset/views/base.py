@@ -190,6 +190,18 @@ class SupersetListWidget(ListWidget):
 class SupersetModelView(ModelView):
     page_size = 100
     list_widget = SupersetListWidget
+    def common_bootstrap_payload(self):
+        """Common data always sent to the client"""
+        messages = get_flashed_messages(with_categories=True)
+        locale = str(get_locale())
+        return {
+            "flash_messages": messages,
+            "conf": {k: conf.get(k) for k in FRONTEND_CONF_KEYS},
+            "locale": locale,
+            "language_pack": get_language_pack(locale),
+            "feature_flags": get_feature_flags(),
+        }
+
 
 
 class ListWidgetWithCheckboxes(ListWidget):

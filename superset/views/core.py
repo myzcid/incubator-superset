@@ -375,7 +375,11 @@ class SliceModelView(SupersetModelView, DeleteMixin):  # noqa
         return self.render_template(
             "superset/add_slice.html",
             bootstrap_data=json.dumps(
-                {"datasources": sorted(datasources, key=lambda d: d["label"])}
+                {
+                    "datasources": sorted(datasources, key=lambda d: d["label"]),
+                    "common": self.common_bootstrap_payload()
+
+                }
             ),
         )
 
@@ -2493,7 +2497,7 @@ class Superset(BaseSupersetView):
             return json_success(payload)
         except Exception as e:
             logging.exception(e)
-            msg = _(
+            msg = (
                 f"{validator.name} was unable to check your query.\nPlease "
                 "make sure that any services it depends on are available\n"
                 f"Exception: {e}"
