@@ -84,5 +84,5 @@ testCSV.csv
 apache-superset-*.tar.gz*
 
 # Translation binaries
-messages.mo
+# messages.mo
 contrib/docker/data
