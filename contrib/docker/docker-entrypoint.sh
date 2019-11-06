@@ -17,7 +17,7 @@
 #
 set -ex
 
- pip install mysqlclient
+#  pip install mysqlclient
 
 export FLASK_APP=superset:app
 flask fab create-admin \

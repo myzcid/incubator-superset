@@ -51,8 +51,8 @@ COPY requirements.txt .
 COPY requirements-dev.txt .
 COPY contrib/docker/requirements-extra.txt .
 
-RUN pip install --upgrade setuptools pip -i https://pypi.tuna.tsinghua.edu.cn/simple \
-    && pip install -r requirements.txt -r requirements-dev.txt -r requirements-extra.txt -i https://pypi.tuna.tsinghua.edu.cn/simple \
+RUN pip install --upgrade setuptools pip -i https://pypi.doubanio.com/simple \
+    && pip install -r requirements.txt -r requirements-dev.txt -r requirements-extra.txt -i https://pypi.doubanio.com/simple \
     && rm -rf /root/.cache/pip
 
 RUN pip install gevent
